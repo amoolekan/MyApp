@@ -7,16 +7,131 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  MyAgent
 
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+stages:
+
+- stage: DeployToTest
+  jobs:
+  - job: DeployToTest
+    steps:
+    - checkout: self
+      fetchDepth: 0
+
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'SonarCloud'
+        organization: 'amoolekan'
+        scannerMode: 'Other'
+        extraProperties: |
+          # Additional properties that will be passed to the scanner, 
+          # Put one key=value per line, example:
+          # sonar.exclusions=**/*.bin
+          sonar.projectKey=amoolekan_MyJavaWeb-1
+          sonar.projectName=MyJavaWeb-1
+       
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.11'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: true
+        sqMavenPluginVersionChoice: 'latest'
+
+    - task: SonarCloudPublish@1
+      inputs:
+        pollingTimeoutSec: '300'  
+
+    - task: CopyFiles@2
+      inputs:
+         SourceFolder: '$(Build.SourcesDirectory)'
+         Contents: '**/*.war'
+         TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - task: CmdLine@2
+      inputs:
+        script: ren $(Build.Artifactstagingdirectory)\target\MyFirstWed-1.0-SNAPSHOT.war 
+                    Test.war
+
+    - task: CopyFilesOverSSH@0
+      inputs:
+         sshEndpoint: 'WebAppSSH-Connection'
+         sourceFolder: '$(Build.ArtifactStagingDirectory)'
+         contents: '**/*.war'
+         targetFolder: '/opt/tomcat/latest/webapps'
+         readyTimeout: '20000'
+         flattenFolders: true
+         
+    - task: SSH@0
+      inputs:
+         sshEndpoint: 'WebAppSSH-Connection'
+         runOptions: 'commands'
+         commands: 'sudo systemctl stop tomcat;sudo systemctl start tomcat'
+         readyTimeout: '20000'
+
+
+- stage: ApprovalToDeployLive
+  jobs:
+  - job: ApprovalToDeployLive
+    displayName: Wait for external validation
+    pool: server
+    timeoutInMinutes: 4320 # job times out in 3 days
+    steps:
+    - task: ManualValidation@0
+      timeoutInMinutes: 1440 # task times out in 1 day
+      inputs:
+        notifyUsers: |
+         amoolekan@outlook.com
+        instructions: 'Please validate the build configuration and resume'
+        onTimeout: 'resume'
+         
+- stage: DeployToLive
+  jobs:
+  - job: DeployToLive
+    steps:
+    - task: Maven@3
+      inputs:
+         mavenPomFile: 'pom.xml'
+         mavenOptions: '-Xmx3072m'
+         javaHomeOption: 'JDKVersion'
+         jdkVersionOption: '1.8'
+         jdkArchitectureOption: 'x64'
+         publishJUnitResults: true
+         testResultsFiles: '**/surefire-reports/TEST-*.xml'
+         goals: 'package'
+    - task: CopyFiles@2
+      inputs:
+         SourceFolder: '$(Build.SourcesDirectory)'
+         Contents: '**/*.war'
+         TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: CmdLine@2
+      inputs:
+        script: ren $(Build.Artifactstagingdirectory)\target\MyFirstWed-1.0-SNAPSHOT.war 
+                    Live.war
+    - task: CopyFilesOverSSH@0
+      inputs:
+         sshEndpoint: 'WebAppSSH-Connection'
+         sourceFolder: '$(Build.ArtifactStagingDirectory)'
+         contents: '**/*.war'
+         targetFolder: '/opt/tomcat/latest/webapps'
+         readyTimeout: '20000'
+         flattenFolders: true
+    - task: SSH@0
+      inputs:
+        sshEndpoint: 'WebAppSSH-Connection'
+        runOptions: 'commands'
+        commands: |
+            sudo systemctl stop tomcat
+            sudo systemctl start tomcat
+        readyTimeout: '20000'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+         ArtifactName: 'drop'
+         publishLocation: 'Container'
