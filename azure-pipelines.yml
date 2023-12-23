@@ -60,7 +60,7 @@ stages:
 
     - task: CopyFilesOverSSH@0
       inputs:
-         sshEndpoint: 'WebAppSSH-Connection'
+         sshEndpoint: 'Tomcat_Server'
          sourceFolder: '$(Build.ArtifactStagingDirectory)'
          contents: '**/*.war'
          targetFolder: '/opt/tomcat/latest/webapps'
@@ -115,7 +115,7 @@ stages:
                     Live2.war
     - task: CopyFilesOverSSH@0
       inputs:
-         sshEndpoint: 'WebAppSSH-Connection'
+         sshEndpoint: 'Tomcat_Server'
          sourceFolder: '$(Build.ArtifactStagingDirectory)'
          contents: '**/*.war'
          targetFolder: '/opt/tomcat/latest/webapps'
