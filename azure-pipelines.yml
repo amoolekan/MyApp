@@ -55,8 +55,8 @@ stages:
 
     - task: CmdLine@2
       inputs:
-        script: ren $(Build.Artifactstagingdirectory)\target\MyFirstWed-1.0-SNAPSHOT.war 
-                    Test.war
+        script: ren $(Build.Artifactstagingdirectory)\target\mylab-1.0-SNAPSHOT.war 
+                    Test2.war
 
     - task: CopyFilesOverSSH@0
       inputs:
@@ -111,8 +111,8 @@ stages:
          TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: CmdLine@2
       inputs:
-        script: ren $(Build.Artifactstagingdirectory)\target\MyFirstWed-1.0-SNAPSHOT.war 
-                    Live.war
+        script: ren $(Build.Artifactstagingdirectory)\target\mylab-1.0-SNAPSHOT.war 
+                    Live2.war
     - task: CopyFilesOverSSH@0
       inputs:
          sshEndpoint: 'WebAppSSH-Connection'
