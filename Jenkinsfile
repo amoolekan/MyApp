@@ -18,6 +18,13 @@ stages{
                 }
             }
         }
+    
+    stage('Rename Package'){
+            steps {
+                sh 'mv ${WORKSPACE}/MyPipeline/target/mylab-1.0-SNAPSHOT.war ${WORKSPACE}/MyPipeline/target/mylab.war'
+            }
+     }
+    
      stage('Validation'){
             steps {
                 input 'Kindly Approve This Package'
@@ -27,12 +34,6 @@ stages{
             steps {
                 sshPublisher(publishers: [sshPublisherDesc(configName: 'SSH_SERVER', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '/target/', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
             }
-        }
-    stage('Reset Tomcat'){
-            steps {
-                sh 'systemctl stop tomcat'
-                sh 'systemctl start tomcat'
-            }
-     }
+        }  
 }
 }
