@@ -8,6 +8,7 @@ stages{
         stage('Build'){
             steps {
                 sh 'mvn clean package'
+                sh 'echo Clean build completed'
             }
             post {
                 success {
@@ -16,14 +17,5 @@ stages{
                 }
             }
         }
-
-        stage ('Deployments'){
-                stage ("Deploy to Staging"){
-                    steps {
-                        sh 'echo clean build'
-                    }
-                }
-            
-        }
-    }
+}
 }
