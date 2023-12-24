@@ -30,8 +30,8 @@ stages{
         }
     stage('Reset Tomcat'){
             steps {
-                sh 'sudo systemctl stop tomcat'
-                sh 'sudo systemctl start tomcat'
+                sh 'systemctl stop tomcat'
+                sh 'systemctl start tomcat'
             }
      }
 }
