@@ -18,13 +18,12 @@ stages{
         }
 
         stage ('Deployments'){
-            parallel{
                 stage ("Deploy to Staging"){
                     steps {
-                        
+                        sh 'echo clean build'
                     }
                 }
-            }
+            
         }
     }
 }
