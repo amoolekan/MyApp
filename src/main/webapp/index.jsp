@@ -5,10 +5,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>MyLab</title>
+        <title>MyApp</title>
     </head>
     <body>
-        <h1>Welcome To Lekan DevOps Compplete V10.1!</h1>
+        <h1>Welcome To My Java Wep App V1.0!</h1>
  <form action="MyWebFormServlet_1" method="POST">
   <label>First name:</label><br>
   <input type="text" name="firstname"><br>
