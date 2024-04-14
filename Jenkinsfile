@@ -48,9 +48,8 @@ def bannerColor = pipelineStatus.toUpperCase() == 'SUCCESS' ? 'green' : 'red'
 def body = """
 <html>
 <body>
-<div style="border: 4px solid ${bannerColor}; padding:
-10px;">
-10px;">
+<div style="border: 4px solid ${bannerColor}; padding:10px;">
+//10px;">
 <h2>${jobName} - Build ${buildNumber}</h2>
 <div style="background-color: ${bannerColor}; padding:
 <h3 style="color: white;">Pipeline Status:
