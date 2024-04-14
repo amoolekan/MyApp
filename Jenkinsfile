@@ -58,10 +58,8 @@ echo '</div>'
 echo '</body>'
 echo '</html>'
 emailext (
-subject: "${jobName} - Build ${buildNumber} -
-${pipelineStatus.toUpperCase()}", body: body,
-to: 'amoolekan@outlook.com', from: 'jenkins@example.com', replyTo: 'jenkins@example.com', mimeType: 'text/html',
-attachmentsPattern: 'trivy-image-report.html'
+subject: "${jobName} - Build ${buildNumber} - ${pipelineStatus.toUpperCase()}", body: body,
+to: 'amoolekan@outlook.com', from: 'jenkins@example.com', replyTo: 'jenkins@example.com', mimeType: 'text/html', attachmentsPattern: 'trivy-image-report.html'
 )
 }
 }
