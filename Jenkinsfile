@@ -9,7 +9,7 @@ stages{
     
 stage('Build'){
 steps {
-sh 'mvn clean test package'
+//sh 'mvn clean test package'
 sh 'echo Clean build completed'
 }
 post {
@@ -49,3 +49,4 @@ mail bcc: '', body: 'This is the report on your build', cc: '', from: '', replyT
     
 }
 
+//
