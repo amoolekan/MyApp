@@ -10,6 +10,7 @@ stages{
 stage('Build'){
 steps {
 //sh 'mvn clean test package'
+sh 'mvn clean package'
 sh 'echo Clean build completed'
 }
 post {
