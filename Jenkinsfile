@@ -40,6 +40,8 @@ sshPublisher(publishers: [sshPublisherDesc(configName: 'SSH_SERVER', transfers: 
 }  
     
 stage('Eamil'){
+steps {
+}
 post { always {
 script {
 def jobName = env.JOB_NAME
