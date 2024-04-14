@@ -46,7 +46,7 @@ steps {
 }
  post {
         always {
-            emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+            emailext body: 'This is a message from Jenkins.', subject: 'Jenkins Pipeline Report', to: 'amoolekan@outlook.com'
         }
     }
 }
