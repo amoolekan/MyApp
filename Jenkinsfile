@@ -65,7 +65,7 @@ to: 'amoolekan@outlook.com', from: 'jenkins@example.com', replyTo: 'jenkins@exam
 }
 }
 }
-)
+}
     
 }
     
