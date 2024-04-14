@@ -41,31 +41,7 @@ sshPublisher(publishers: [sshPublisherDesc(configName: 'SSH_SERVER', transfers: 
     
 stage('Eamil'){
 steps {
-}
-post { always {
-script {
-def jobName = env.JOB_NAME
-def buildNumber = env.BUILD_NUMBER
-def pipelineStatus = currentBuild.result ?: 'UNKNOWN'
-def bannerColor = pipelineStatus.toUpperCase() == 'SUCCESS' ? 'green' : 'red'
-def body = """
-echo '<html>'
-echo '<body>'
-echo '<div style="border: 4px solid ${bannerColor}; padding:10px;">'
-echo '<h2>${jobName} - Build ${buildNumber}</h2>'
-echo '<div style="background-color: ${bannerColor}; padding:
-echo '<h3 style="color: white;">Pipeline Status:${pipelineStatus.toUpperCase()}</h3>'
-echo '<p>Check the <a href="${BUILD_URL}">console output</a>.</p>'
-"""
-echo '</div>'
-echo '</body>'
-echo '</html>'
-emailext (
-subject: "${jobName} - Build ${buildNumber} - ${pipelineStatus.toUpperCase()}", body: body,
-to: 'amoolekan@outlook.com', from: 'jenkins@example.com', replyTo: 'jenkins@example.com', mimeType: 'text/html', attachmentsPattern: 'trivy-image-report.html'
-)
-}
-}
+mail bcc: '', body: 'This is the report on your build', cc: '', from: '', replyTo: '', subject: 'Report on Build', to: 'amoolekan@outlook.com'
 }
 }
     
