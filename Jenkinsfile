@@ -8,7 +8,7 @@ maven 'MVN'
 stages{
     
 //stage('Build'){
-steps {
+//steps {
 //sh 'mvn clean test package'
 //sh 'mvn clean package'
 //sh 'echo Clean build completed'
