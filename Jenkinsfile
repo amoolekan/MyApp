@@ -46,20 +46,17 @@ def buildNumber = env.BUILD_NUMBER
 def pipelineStatus = currentBuild.result ?: 'UNKNOWN'
 def bannerColor = pipelineStatus.toUpperCase() == 'SUCCESS' ? 'green' : 'red'
 def body = """
-<html>
-<body>
-<div style="border: 4px solid ${bannerColor}; padding:10px;">
-<h2>${jobName} - Build ${buildNumber}</h2>
-<div style="background-color: ${bannerColor}; padding:
-<h3 style="color: white;">Pipeline Status:
-${pipelineStatus.toUpperCase()}</h3>
-</div>
-<p>Check the <a href="${BUILD_URL}">console
-output</a>.</p>
+echo '<html>'
+echo '<body>'
+echo '<div style="border: 4px solid ${bannerColor}; padding:10px;">'
+echo '<h2>${jobName} - Build ${buildNumber}</h2>'
+echo '<div style="background-color: ${bannerColor}; padding:
+echo '<h3 style="color: white;">Pipeline Status:${pipelineStatus.toUpperCase()}</h3>'
+echo '<p>Check the <a href="${BUILD_URL}">console output</a>.</p>'
 """
-</div>
-</body>
-</html>
+echo '</div>'
+echo '</body>'
+echo '</html>'
 emailext (
 subject: "${jobName} - Build ${buildNumber} -
 ${pipelineStatus.toUpperCase()}", body: body,
