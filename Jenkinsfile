@@ -38,7 +38,8 @@ steps {
 sshPublisher(publishers: [sshPublisherDesc(configName: 'SSH_SERVER', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '/target/', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
 }
 }  
-
+    
+stage('Eamil'){
 post { always {
 script {
 def jobName = env.JOB_NAME
@@ -64,7 +65,7 @@ to: 'amoolekan@outlook.com', from: 'jenkins@example.com', replyTo: 'jenkins@exam
 }
 }
 }
-
+)
     
 }
     
