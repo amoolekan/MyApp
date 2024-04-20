@@ -51,6 +51,7 @@ steps {
           from: 'MS_I6rs46@trial-3zxk54vnp3qljy6v.mlsender.net', 
           to: '$DEFAULT_RECIPIENTS',
           body: '$DEFAULT_CONTENT', 
+          attachLog: 'true',
           recipientProviders: [ requestor() ]
         )
         }
