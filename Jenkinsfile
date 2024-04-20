@@ -61,7 +61,7 @@ steps {
 sh 'echo Sending email'
 }
 post {
-always {
+success {
 emailext (
 subject: '$DEFAULT_SUBJECT',
 to: '$DEFAULT_RECIPIENTS',
@@ -70,7 +70,18 @@ attachLog: 'true',
 recipientProviders: [ requestor() ]
 )
 }
+
+failure {
+emailext (
+subject: '$DEFAULT_SUBJECT',
+to: '$DEFAULT_RECIPIENTS',
+body: '$DEFAULT_CONTENT', 
+attachLog: 'true',
+recipientProviders: [ requestor() ]
+)
 }
+    
+}    
 }
     
 }    
