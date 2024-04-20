@@ -13,6 +13,7 @@ stages{
     
 stage('Compile'){
 steps {
+sh 'mvn clean'
 sh 'mvn compile'
 }
 }
@@ -25,7 +26,7 @@ sh 'mvn test'
 
 stage('Build'){
 steps {
-sh 'mvn clean package'
+sh 'mvn package'
 sh 'echo Clean build completed'
 }
 post {
