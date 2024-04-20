@@ -48,7 +48,7 @@ steps {
         always {
             emailext (
           subject: '$DEFAULT_SUBJECT',
-          from: 'Jenkins@trial-3zxk54vnp3qljy6v.mlsender.net',  
+          //from: 'Jenkins@trial-3zxk54vnp3qljy6v.mlsender.net',  
           to: '$DEFAULT_RECIPIENTS',
           body: '$DEFAULT_CONTENT', 
           attachLog: 'true',
