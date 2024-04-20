@@ -24,18 +24,18 @@ sh 'mvn test'
 }
 }
 
-stage('Build'){
-steps {
-sh 'mvn package'
-sh 'echo Clean build completed'
-}
-post {
-success {
-echo 'Archiving the artifacts 3'
-archiveArtifacts artifacts: '**/target/*.war'                   
-}
-}   
-}
+//stage('Build'){
+//steps {
+//sh 'mvn package'
+//sh 'echo Clean build completed'
+//}
+//post {
+//success {
+//echo 'Archiving the artifacts 3'
+//archiveArtifacts artifacts: '**/target/*.war'                   
+//}
+//}   
+//}
     
     
 stage('Rename Package'){
