@@ -46,7 +46,12 @@ steps {
 }
  post {
         always {
-            emailext (body: 'This is a message from Jenkins.', subject: 'Jenkins Pipeline Report', to: 'amoolekan@outlook.com')
+            emailext (
+          subject: '$DEFAULT_SUBJECT',
+          body: '$DEFAULT_CONTENT',
+          to: '$DEFAULT_RECIPIENTS',
+          recipientProviders: [ requestor() ]
+        )
         }
     }
 }
