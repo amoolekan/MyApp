@@ -24,18 +24,18 @@ sh 'mvn test'
 }
 }
 
-//stage('Build'){
-//steps {
-//sh 'mvn package'
-//sh 'echo Clean build completed'
-//}
+stage('Build'){
+steps {
+sh 'mvn package'
+sh 'echo Clean build completed'
+}
 //post {
 //success {
 //echo 'Archiving the artifacts 3'
 //archiveArtifacts artifacts: '**/target/*.war'                   
 //}
 //}   
-//}
+}
     
     
 stage('Rename Package'){
@@ -60,8 +60,10 @@ stage('Email Notification'){
 steps {
 sh 'echo Sending email'
 }
+    
 post {
-success {
+    
+always {
 emailext (
 subject: '$DEFAULT_SUBJECT',
 to: '$DEFAULT_RECIPIENTS',
@@ -69,32 +71,42 @@ body: '$DEFAULT_CONTENT',
 attachLog: 'true',
 recipientProviders: [ requestor() ]
 )
+}
+    
+//success {
+//emailext (
+//subject: '$DEFAULT_SUBJECT',
+//to: '$DEFAULT_RECIPIENTS',
+//body: '$DEFAULT_CONTENT', 
+//attachLog: 'true',
+//recipientProviders: [ requestor() ]
+//)
+//}
+
+//failure {
+//emailext (
+//subject: '$DEFAULT_SUBJECT',
+//to: '$DEFAULT_RECIPIENTS',
+//body: '$DEFAULT_CONTENT', 
+//attachLog: 'true',
+//recipientProviders: [ requestor() ]
+//)
+//}
+    
+//unstable {
+//emailext (
+//subject: '$DEFAULT_SUBJECT',
+//to: '$DEFAULT_RECIPIENTS',
+//body: '$DEFAULT_CONTENT', 
+//attachLog: 'true',
+//recipientProviders: [ requestor() ]
+//)
+//}
+    
+}    
+}
+    
+}    
 }
 
-failure {
-emailext (
-subject: '$DEFAULT_SUBJECT',
-to: '$DEFAULT_RECIPIENTS',
-body: '$DEFAULT_CONTENT', 
-attachLog: 'true',
-recipientProviders: [ requestor() ]
-)
-}
-    
-unstable {
-emailext (
-subject: '$DEFAULT_SUBJECT',
-to: '$DEFAULT_RECIPIENTS',
-body: '$DEFAULT_CONTENT', 
-attachLog: 'true',
-recipientProviders: [ requestor() ]
-)
-}
-    
-}    
-}
-    
-}    
-}
-//
 
