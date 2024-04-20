@@ -81,6 +81,16 @@ recipientProviders: [ requestor() ]
 )
 }
     
+unstable {
+emailext (
+subject: '$DEFAULT_SUBJECT',
+to: '$DEFAULT_RECIPIENTS',
+body: '$DEFAULT_CONTENT', 
+attachLog: 'true',
+recipientProviders: [ requestor() ]
+)
+}
+    
 }    
 }
     
