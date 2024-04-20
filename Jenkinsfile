@@ -46,7 +46,7 @@ steps {
 }
  post {
         always {
-            emailext (body: 'This is a message from Jenkins.', subject: 'Jenkins Pipeline Report', to: 'amoolekanoutlook.com')
+            emailext (body: 'This is a message from Jenkins.', subject: 'Jenkins Pipeline Report', to: 'amoolekan@outlook.com')
         }
     }
 }
