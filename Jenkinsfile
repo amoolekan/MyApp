@@ -50,7 +50,7 @@ steps {
           subject: '$DEFAULT_SUBJECT',
           body: '$DEFAULT_CONTENT',
           to: '$DEFAULT_RECIPIENTS',
-          recipientProviders: [ developers() ]
+          recipientProviders: [ requestor() ]
         )
         }
     }
