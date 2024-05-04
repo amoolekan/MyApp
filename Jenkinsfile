@@ -11,39 +11,11 @@ maven 'MVN'
     
 stages{
 
-stage('Application Build'){
+stage('Build'){
 steps {
 sh 'mvn clean package'
 }
 }
-
-stage('Application Test'){
-steps {
-sh 'mvn test'
-}
-}
-    
-stage('Code Analysis'){
-steps {
-withSonarQubeEnv(credentialsId: 'sonarqube-jenkins', installationName: 'Sonarqube') {
- sh "mvn sonar:sonar"
-}
-}
-}
-
-   
-//stage('Compile'){
-//steps {
-//sh 'mvn clean'
-//sh 'mvn compile'
-//}
-//}
-
-//stage('Test'){
-//steps {
-//sh 'mvn test'
-//}
-//}
 
 //stage('Build'){
 //steps {
@@ -58,24 +30,39 @@ withSonarQubeEnv(credentialsId: 'sonarqube-jenkins', installationName: 'Sonarqub
     //}   
 //}
     
+
+stage('Test'){
+steps {
+sh 'mvn test'
+}
+}
     
-//stage('Rename Package'){
-//steps {
-//sh 'mv ${WORKSPACE}/target/mylab-1.0-SNAPSHOT.war ${WORKSPACE}/target/myjava.war'
-//}
-//}
+stage('Code Analysis'){
+steps {
+//withSonarQubeEnv(credentialsId: 'sonarqube-jenkins', installationName: 'Sonarqube') {
+withSonarQubeEnv(installationName: 'Sonarqube') {
+ sh "mvn sonar:sonar"
+}
+}
+}
     
-//stage('Validation'){
-//steps {
-//input 'Kindly Approve This Package'
-//}
-//}
+stage('Rename Package'){
+steps {
+sh 'mv ${WORKSPACE}/target/mylab-1.0-SNAPSHOT.war ${WORKSPACE}/target/myjava.war'
+}
+}
     
-//stage('Deployment'){
-//steps {
-//sshPublisher(publishers: [sshPublisherDesc(configName: 'SSH_SERVER', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '/target/', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
-//}
-//}  
+stage('Validation'){
+steps {
+input 'Kindly Approve This Package'
+}
+}
+    
+stage('Deployment'){
+steps {
+sshPublisher(publishers: [sshPublisherDesc(configName: 'SSH_SERVER', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '/target/', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+}
+}  
 
 stage('Email Notification'){
 steps {
