@@ -12,10 +12,9 @@ maven 'MVN'
 stages{
 
 stage('CodeAnalysis'){
-def mvn = tool 'MVN';  
 steps {
 withSonarQubeEnv(installationName: 'Sonarqube') {
- sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=webapp-project"
+ sh "clean verify sonar:sonar -Dsonar.projectKey=webapp-project"
 }
 }
 }
