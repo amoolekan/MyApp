@@ -11,10 +11,16 @@ maven 'MVN'
     
 stages{
 
+stage('Compile'){
+steps {
+sh 'mvn compile'
+}
+}
+
 stage('CodeAnalysis'){
 steps {
 withSonarQubeEnv('Sonarqube') {
- sh "mvn clean package sonar:sonar -Dsonar.projectKey=webapp-project"
+ sh "mvn sonar:sonar -Dsonar.projectKey=webapp-project"
 }
 }
 }
