@@ -11,15 +11,21 @@ maven 'MVN'
     
 stages{
 
-stage('Compile'){
+stage('Application Build'){
 steps {
-sh 'mvn compile'
+sh 'mvn clean package'
 }
 }
 
-stage('CodeAnalysis'){
+stage('Application Test'){
 steps {
-withSonarQubeEnv('Sonarqube') {
+sh 'mvn test'
+}
+}
+    
+stage('Code Analysis'){
+steps {
+withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') {
  sh "mvn sonar:sonar"
 }
 }
