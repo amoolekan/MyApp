@@ -31,7 +31,6 @@ withSonarQubeEnv(credentialsId: 'sonarqube-jenkins', installationName: 'Sonarqub
 }
 }
 
-
    
 //stage('Compile'){
 //steps {
