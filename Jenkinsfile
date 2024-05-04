@@ -25,7 +25,7 @@ sh 'mvn test'
     
 stage('Code Analysis'){
 steps {
-withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') {
+withSonarQubeEnv(credentialsId: 'sonarqube-jenkins') {
  sh "mvn sonar:sonar"
 }
 }
