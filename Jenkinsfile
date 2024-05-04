@@ -20,8 +20,7 @@ withSonarQubeEnv(installationName: 'Sonarqube') {
 }
 }
 }
-}
-}
+
     
 //stage('Compile'){
 //steps {
