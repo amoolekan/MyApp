@@ -1,9 +1,5 @@
 pipeline {
 agent any
-    
-options {
- durabilityHint 'MAX_SURVIVABILITY'
-}
 
 tools {
 maven 'MVN'
