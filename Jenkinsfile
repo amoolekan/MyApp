@@ -13,8 +13,8 @@ stages{
 
 stage('CodeAnalysis'){
 steps {
-withSonarQubeEnv(installationName: 'Sonarqube') {
- sh "clean verify sonar:sonar -Dsonar.projectKey=webapp-project"
+withSonarQubeEnv('Sonarqube') {
+ sh "mvn clean package sonar:sonar -Dsonar.projectKey=webapp-project"
 }
 }
 }
