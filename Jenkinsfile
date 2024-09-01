@@ -44,38 +44,38 @@ sh 'mvn test'
     
 stage('Rename Package'){
 steps {
-sh 'mv ${WORKSPACE}/target/mylab-1.0-SNAPSHOT.war ${WORKSPACE}/target/myjava.war'
+sh 'mv ${WORKSPACE}/target/mylab-1.0-SNAPSHOT.war ${WORKSPACE}/target/myapp.war'
 }
 }
     
-stage('Validation'){
-steps {
-input 'Kindly Approve This Package'
-}
-}
+//stage('Validation'){
+//steps {
+//input 'Kindly Approve This Package'
+//}
+//}
     
 stage('Deployment'){
 steps {
-sshPublisher(publishers: [sshPublisherDesc(configName: 'SSH_SERVER', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '/target/', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
+sshPublisher(publishers: [sshPublisherDesc(configName: 'WebAppSrv', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '/target/', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
 }
 }  
 
-stage('Email Notification'){
-steps {
-sh 'echo Sending email'
-}
+//stage('Email Notification'){
+//steps {
+//sh 'echo Sending email'
+//}
     
-post {
+//post {
     
-always {
-emailext (
-subject: '$DEFAULT_SUBJECT',
-to: '$DEFAULT_RECIPIENTS',
-body: '$DEFAULT_CONTENT', 
-attachLog: 'true',
-recipientProviders: [ requestor() ]
-)
-}
+//always {
+//emailext (
+//subject: '$DEFAULT_SUBJECT',
+//to: '$DEFAULT_RECIPIENTS',
+//body: '$DEFAULT_CONTENT', 
+//attachLog: 'true',
+//recipientProviders: [ requestor() ]
+//)
+//}
     
 //success {
 //emailext (
@@ -107,8 +107,8 @@ recipientProviders: [ requestor() ]
 //)
 //}
     
-}    
-}
+//}    
+//}
     
 }    
 }
