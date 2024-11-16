@@ -8,7 +8,7 @@
         <title>MyApp</title>
     </head>
     <body>
-        <h1>Prometheus Demo 1</h1>
+        <h1>Prometheus Demo 2</h1>
  <form action="MyWebFormServlet_1" method="POST">
   <label>First name:</label><br>
   <input type="text" name="firstname"><br>
