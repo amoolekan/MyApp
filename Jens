@@ -1,4 +1,4 @@
-pipeline { agent any
+pipeline { agent anY
 tools {
 jdk 'jdk17'
 maven 'maven3'
